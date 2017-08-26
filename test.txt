@@ -1,0 +1,2 @@
+testLabelImgs/JPEGImages/000079.jpg testLabelImgs/Annotations/000079.xml
+testLabelImgs/JPEGImages/000020.jpg testLabelImgs/Annotations/000020.xml
