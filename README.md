@@ -21,10 +21,10 @@
 * testLabelImgs/labels: the labels for each image
 * testLabelImgs/Annotations: the labels with .xml format
 * testLabelImgs/ImageSets/Main: the test and trainval txt files
-* the original labels is created by BBox-Label-Tool, the format is:
-`` object_num 
-`` className x1min y1min x1max y1max 
-`` className x2min y2min x2max y2max 
+* the original labels is created by BBox-Label-Tool, the format is:  
+`` object_num``  
+`` className x1min y1min x1max y1max``  
+`` className x2min y2min x2max y2max``  
 
 ## Output Dirs
 * models:
