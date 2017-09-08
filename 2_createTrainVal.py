@@ -1,22 +1,24 @@
 #!/usr/bin/env python
 import os
 import cv2
+import global_dir
 from random import shuffle
 from collections import OrderedDict
 
-paths = ['testLabelImgs/JPEGImages']
+imgpath = ['testLabelImgs/JPEGImages']
 file_type_list =['GIF', 'gif', 'jpeg',  'bmp', 'png', 'JPG',  'jpg', 'JPEG']
 #file_type_list = ['jpg']
 
 filenames = OrderedDict()
 write_lines = []
 types = set()
-for path in paths:
+for path in imgpath:
     for root, _, files in os.walk(path):
         for fname in files:
             types.add(fname.split('.')[-1])
             if fname.split('.')[-1] in file_type_list:
                 file_path = os.path.join(root,fname)
+                print 'file_path', file_path
                 label_name = file_path.split(path+'/')[-1]
                 label_name = label_name.split('/')[0]
                 if label_name in filenames.keys():

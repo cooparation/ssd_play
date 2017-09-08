@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import global_dir
 import os
 import sys
 
@@ -9,10 +10,10 @@ import cv2
 from itertools import islice
 from xml.dom.minidom import Document
 
-labels='./testLabelImgs/labels'
-imgpath='./testLabelImgs/JPEGImages/'
-xmlpath_new='./testLabelImgs/Annotations/'
-foldername='testLabelImgs'
+#global_dir.imgpath='./testLabelImgs/JPEGImages/'
+#global_dir.xmlpath_new='./testLabelImgs/Annotations/'
+#global_dir.labels='./testLabelImgs/labels'
+#global_dir.foldername='testLabelImgs'
 
 def insertObject(doc, datas):
     obj = doc.createElement('object')
@@ -51,7 +52,7 @@ def insertObject(doc, datas):
     return obj
 
 def create():
-    for walk in os.walk(labels):
+    for walk in os.walk(global_dir.labels):
         for each in walk[2]:
             fidin=open(walk[0] + '/'+ each,'r')
             objIndex = 0
@@ -63,18 +64,18 @@ def create():
                     print 'bounding box information error'
                     continue
                 pictureName = each.replace('.txt', '.jpg')
-                imageFile = imgpath + pictureName
+                imageFile = global_dir.imgpath +'/'+ pictureName
                 img = cv2.imread(imageFile)
                 imgSize = img.shape
                 if 1 == objIndex:
                     xmlName = each.replace('.txt', '.xml')
-                    f = open(xmlpath_new + xmlName, "w")
+                    f = open(global_dir.xmlpath_new + '/' + xmlName, "w")
                     doc = Document()
                     annotation = doc.createElement('annotation')
                     doc.appendChild(annotation)
 
                     folder = doc.createElement('folder')
-                    folder.appendChild(doc.createTextNode(foldername))
+                    folder.appendChild(doc.createTextNode(global_dir.foldername))
                     annotation.appendChild(folder)
 
                     filename = doc.createElement('filename')
@@ -86,7 +87,7 @@ def create():
                     database.appendChild(doc.createTextNode('My Database'))
                     source.appendChild(database)
                     source_annotation = doc.createElement('annotation')
-                    source_annotation.appendChild(doc.createTextNode(foldername))
+                    source_annotation.appendChild(doc.createTextNode(global_dir.foldername))
                     source.appendChild(source_annotation)
                     image = doc.createElement('image')
                     image.appendChild(doc.createTextNode('flickr'))
@@ -132,4 +133,10 @@ def create():
 
 
 if __name__ == '__main__':
+    if (len(sys.argv) == 4):
+        global_dir.imgpath = sys.argv[1]
+        global_dir.labels = sys.argv[2]
+        global_dir.xmlpath_new = sys.argv[3]
+    else:
+        print "Usage:", sys.argv[0], 'image_path labels_path xml_path'
     create()
