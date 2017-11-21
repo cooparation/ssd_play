@@ -80,10 +80,10 @@ remove_old_models = False
 
 # The database file for training data. Created by data/VOC0712/create_data.sh
 #train_data = "examples/VOC0712/VOC0712_trainval_lmdb"
-train_data = "example/testLabelImgs/testLabelImgs_trainval_lmdb"
+train_data = "data/testLabelImgs/testLabelImgs_trainval_lmdb"
 # The database file for testing data. Created by data/VOC0712/create_data.sh
 #test_data = "examples/VOC0712/VOC0712_test_lmdb"
-test_data = "example/testLabelImgs/testLabelImgs_test_lmdb"
+test_data = "data/testLabelImgs/testLabelImgs_test_lmdb"
 # Specify the batch sampler.
 resize_width = 300
 resize_height = 300

@@ -10,8 +10,8 @@
 * write labelmap_voc.prototxt files
 * run with the continuously num files
 * 1_createXml.py: create xml formats from origin labels or use labelImg tools to get the xml format labels
-* 2_createTrainVal.py: generate the test and trainval image name lists in ImageSets/Main
-* 3_create_list.sh: after 2_createTrainVal.py, generate the test, trainval image lists and get test image size
+* 2_createTrainVal.py: generate the test and trainval image name lists in ImageSets/Main, generate trainval test file lists and get test image size
+* [3_create_list.sh]: optional, 2_createTrainVal.py, generate the test, trainval image lists and get test image size
 * 4_create_data.sh: get label map and generate LMDB datas
 * 5_ssd_run.py: run ssd training and get the solver.prototxt and train_net
 * 6_ssd_run_direct.sh: training the net directly based on the train_net have generated
@@ -31,9 +31,9 @@
 * examples:
 * job:
 * results:
-* test.txt
-* trainval.txt
-* test_name_size.txt
+* data/test.txt
+* data/trainval.txt
+* data/test_name_size.txt
 
 ## Net Instruction
 * ``http://www.cnblogs.com/hansjorn/p/7445411.html  

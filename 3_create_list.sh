@@ -1,8 +1,6 @@
 #!/bin/bash
 
-IMAGE_DIR=testLabelImgs
-#root_dir=$HOME/testLabelImgs/
-root_dir=$(cd `dirname $0`; pwd) #current bash dir
+IMAGE_DIR='/apps/liusj/FoodDetDatasets'
 sub_dir=ImageSets/Main
 bash_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 for dataset in trainval test
@@ -19,7 +17,7 @@ do
     #  continue
     #fi
     echo "Create list for $name $dataset..."
-    dataset_file=$root_dir/$name/$sub_dir/$dataset.txt
+    dataset_file=$name/$sub_dir/$dataset.txt
 
     img_file=$bash_dir/$dataset"_img.txt"
     cp $dataset_file $img_file
@@ -40,6 +38,7 @@ do
   # Generate image name and size infomation.
   if [ $dataset == "test" ]
   then
+    root_dir=$IMAGE_DIR/JPEGImages
     $bash_dir/get_image_size $root_dir $dst_file $bash_dir/$dataset"_name_size.txt"
   fi
 

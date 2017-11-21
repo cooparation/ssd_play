@@ -1,15 +1,15 @@
 cur_dir=$(cd $( dirname ${BASH_SOURCE[0]} ) && pwd )
-#root_dir=$cur_dir/../..
-root_dir=$cur_dir
-
-#cd $root_dir
 
 redo=1
-data_root_dir=$(cd `dirname $0`; pwd)
+data_root_dir="/apps/liusj"
+#dataset_name="FoodDetDatasets"
 dataset_name="testLabelImgs"
-mapfile="${cur_dir}/labelmap_voc.prototxt"
+mapfile="./data/labelmap_voc.prototxt"
 anno_type="detection"
+
 db="lmdb"
+lmdb_path=$data_root_dir/$dataset_name/$db
+lmdb_softlink_path=data/$dataset_name
 min_dim=0
 max_dim=0
 width=0
@@ -20,7 +20,8 @@ if [ $redo ]
 then
   extra_cmd="$extra_cmd --redo"
 fi
+image_root_dir='/'
 for subset in test trainval
 do
-  python create_annoset.py --anno-type='detection' --label-map-file=$mapfile --min-dim=$min_dim --max-dim=$max_dim --resize-width=$width --resize-height=$height --check-label $extra_cmd $data_root_dir $root_dir/$subset.txt $data_root_dir/$dataset_name/$db/$dataset_name"_"$subset"_"$db example/$dataset_name
+  python create_annoset.py --anno-type='detection' --label-map-file=$mapfile --min-dim=$min_dim --max-dim=$max_dim --resize-width=$width --resize-height=$height --check-label $extra_cmd $image_root_dir ./data/$subset.txt $lmdb_path/$dataset_name"_"$subset"_"$db $lmdb_softlink_path
 done
