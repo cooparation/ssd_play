@@ -1,0 +1,6 @@
+example/*
+models/*
+jobs/*
+data/*.txt
+*.pyc
+tags
