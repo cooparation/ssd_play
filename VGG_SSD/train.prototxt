@@ -1,4 +1,4 @@
-name: "VGG_VOC0712_SSD_300x300_train"
+name: "VGG_SSD_300x300_train"
 layer {
   name: "data"
   type: "AnnotatedData"
@@ -45,7 +45,7 @@ layer {
     }
   }
   data_param {
-    source: "example/testLabelImgs/testLabelImgs_trainval_lmdb"
+    source: "./data/testLabelImgs/testLabelImgs_trainval_lmdb"
     batch_size: 8
     backend: LMDB
   }
@@ -132,7 +132,7 @@ layer {
       max_sample: 1
       max_trials: 50
     }
-    label_map_file: "./labelmap_voc.prototxt"
+    label_map_file: "./data/labelmap_voc.prototxt"
   }
 }
 layer {
@@ -1714,16 +1714,16 @@ layer {
   multibox_loss_param {
     loc_loss_type: SMOOTH_L1
     conf_loss_type: SOFTMAX
-    loc_weight: 1.0
+    loc_weight: 1.0 #(neg_pos_ratio + 1.) / 4.
     num_classes: 3
-    share_location: true
+    share_location: true #共享类别位置预测
     match_type: PER_PREDICTION
     overlap_threshold: 0.5
     use_prior_for_matching: true
     background_label_id: 0
     use_difficult_gt: true
-    neg_pos_ratio: 3.0
-    neg_overlap: 0.5
+    neg_pos_ratio: 3.0 #负样本与正样本的比例
+    neg_overlap: 0.5 #负样本overlap的阈值
     code_type: CENTER_SIZE
     ignore_cross_boundary_bbox: false
     mining_type: MAX_NEGATIVE

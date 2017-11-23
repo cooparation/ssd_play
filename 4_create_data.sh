@@ -2,7 +2,6 @@ cur_dir=$(cd $( dirname ${BASH_SOURCE[0]} ) && pwd )
 
 redo=1
 data_root_dir="/apps/liusj"
-#dataset_name="FoodDetDatasets"
 dataset_name="testLabelImgs"
 mapfile="./data/labelmap_voc.prototxt"
 anno_type="detection"

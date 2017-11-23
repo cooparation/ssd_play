@@ -1,4 +1,4 @@
-name: "VGG_VOC0712_SSD_300x300_test"
+name: "VGG_SSD_300x300_test"
 layer {
   name: "data"
   type: "AnnotatedData"
@@ -20,14 +20,14 @@ layer {
     }
   }
   data_param {
-    source: "example/testLabelImgs/testLabelImgs_test_lmdb"
+    source: "./data/testLabelImgs/testLabelImgs_test_lmdb"
     batch_size: 1
     backend: LMDB
   }
   annotated_data_param {
     batch_sampler {
     }
-    label_map_file: "./labelmap_voc.prototxt"
+    label_map_file: "./data/labelmap_voc.prototxt"
   }
 }
 layer {
@@ -1638,11 +1638,11 @@ layer {
       top_k: 400
     }
     save_output_param {
-      output_directory: "/home/liusj/ssd_play/results/VOC2007/SSD_300x300/Main"
+      output_directory: "./data/results/VGG_SSD_300x300/Main"
       output_name_prefix: "comp4_det_test_"
       output_format: "VOC"
-      label_map_file: "./labelmap_voc.prototxt"
-      name_size_file: "./test_name_size.txt"
+      label_map_file: "./data/labelmap_voc.prototxt"
+      name_size_file: "./data/test_name_size.txt"
       num_test_image: 2
     }
     code_type: CENTER_SIZE
@@ -1664,7 +1664,7 @@ layer {
     background_label_id: 0
     overlap_threshold: 0.5
     evaluate_difficult_gt: false
-    name_size_file: "./test_name_size.txt"
+    name_size_file: "./data/test_name_size.txt"
   }
 }
 

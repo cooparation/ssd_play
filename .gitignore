@@ -3,4 +3,5 @@ models/*
 jobs/*
 data/*.txt
 *.pyc
+*.swp
 tags

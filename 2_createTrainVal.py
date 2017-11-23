@@ -69,11 +69,11 @@ def getTrainTestLists(data_dir):
 
 if __name__ == '__main__':
 
-    data_dir = '/apps/liusj/FoodDetDatasets'
+    data_dir = '/apps/liusj/testLabelImgs'
     getTrainTestLists(data_dir)
 
     list_files = './data/test.txt'
-    test_name_file = './data/test_name_file.txt'
+    test_name_file = './data/test_name_size.txt'
 
     #root get_image_size root_dir list_files test_name_file
     os.system('./get_image_size ' + '/' + ' ' + list_files +' ' + test_name_file)
