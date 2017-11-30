@@ -1,7 +1,7 @@
 example/*
 models/*
 jobs/*
-data/*.txt
+data/*
 *.pyc
 *.swp
 tags
