@@ -1,3 +1,4 @@
+# coding=utf-8
 #!/usr/bin/env python
 import os
 import sys
@@ -10,6 +11,57 @@ import shutil
 
 file_type_list =['GIF', 'gif', 'jpeg',  'bmp', 'png', 'JPG',  'jpg', 'JPEG']
 #file_type_list = ['jpg']
+
+##############################
+### generate the labelname_voc
+# example:
+# edit label
+# label_info = [
+#     dict(name='none', label=0, display_name='background'),  # backgroud
+#     dict(name="cat",label=1, display_name='cat'),  # class1
+#     dict(name="dog",label=2, display_name='dog'),  # class2
+# ]
+# labelmap('./labelmap_voc.prototxt', label_info)
+#############################
+def labelmap(labelmap_file, label_info):
+    labelmap = caffe_pb2.LabelMap()
+    for i in range(len(label_info)):
+        labelmapitem = caffe_pb2.LabelMapItem()
+        labelmapitem.name = label_info[i]['name']
+        labelmapitem.label = label_info[i]['label']
+        labelmapitem.display_name = label_info[i]['display_name']
+        labelmap.item.add().MergeFrom(labelmapitem)
+    with open(labelmap_file, 'w') as f:
+        f.write(str(labelmap))
+
+#########################
+### rename image
+########################
+def rename_img(Img_dir):
+    # 重新命名Img,这里假设图像名称表示为000011.jpg、003456.jpg、000000.jpg格式，最高6位，前补0
+    # 列出图像，并将图像改为序号名称
+    listfile=os.listdir(Img_dir) # 提取图像名称列表
+    total_num = 0
+    for line in listfile:
+        if line[-4:] == '.jpg':
+            newname = '{:0>6}'.format(total_num) +'.jpg'
+            os.rename(os.path.join(Img_dir, line), os.path.join(Img_dir, newname))
+            total_num+=1         #统计所有图像
+
+def deleteChildNodesFromeXML(xml_list_path, CLASSES, out_data_dir):
+import xml.etree.cElementTree as ET
+#path_root = ['./VOC2007/Annotations',
+#             './VOC2012/Annotations']
+#CLASSES = ["dog",  "person"]
+    xml_name = os.path.basename(xml_list_path)
+    tree = ET.parse(xml_list_path)
+    root = tree.getroot() # get root node
+    for child in root.findall('object'):
+        name = child.find('name').text
+        if not name in CLASSES:
+            root.remove(child)
+
+    tree.write(os.path.join(out_data_dir, 'Annotations', xml_name))
 
 # note: JPEGImages and Annotations are contained in data_dir
 def extractVOCSomeClass(src_data_dir, dst_data_dir, list_files):
