@@ -6,3 +6,4 @@ data/*
 *.swp
 tags
 tmp/*
+output_tmp/*
