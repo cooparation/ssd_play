@@ -7,3 +7,4 @@ data/*
 tags
 tmp/*
 output_tmp/*
+build/

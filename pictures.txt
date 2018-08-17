@@ -1,2 +1,1 @@
-/home/liusj/datasets/20170814105504.jpg
-
+/apps/liusj/VOCdevkit/voc_data/VOCdevkit/VOC2007/JPEGImages/000001.jpg
