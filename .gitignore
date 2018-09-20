@@ -2,6 +2,7 @@ example/*
 models/*
 jobs/*
 data/*
+core.*
 *.pyc
 *.swp
 tags

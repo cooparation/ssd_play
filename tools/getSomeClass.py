@@ -9,6 +9,8 @@ from random import shuffle
 from collections import OrderedDict
 import shutil
 
+import xml.etree.cElementTree as ET # parse xml
+
 file_type_list =['GIF', 'gif', 'jpeg',  'bmp', 'png', 'JPG',  'jpg', 'JPEG']
 #file_type_list = ['jpg']
 
@@ -36,20 +38,23 @@ def labelmap(labelmap_file, label_info):
 
 #########################
 ### rename image
+### rename Img,output image name is the format
+### 000000011.jpg,000003456.jpg,000000000.jpg, 最高9位，前补0
 ########################
 def rename_img(Img_dir):
-    # 重新命名Img,这里假设图像名称表示为000011.jpg、003456.jpg、000000.jpg格式，最高6位，前补0
-    # 列出图像，并将图像改为序号名称
-    listfile=os.listdir(Img_dir) # 提取图像名称列表
+    listfile=os.listdir(Img_dir) # get the image lists
     total_num = 0
     for line in listfile:
         if line[-4:] == '.jpg':
-            newname = '{:0>6}'.format(total_num) +'.jpg'
+            newname = '{:0>9}'.format(total_num) +'.jpg'
             os.rename(os.path.join(Img_dir, line), os.path.join(Img_dir, newname))
-            total_num+=1         #统计所有图像
+            total_num+=1
 
+# note: out_data_dir contains the Annotations
+# Brief: if the xml file has the classes
+#        then remove the not needed classes and save to out_data_dir
+#        else do nothing
 def deleteChildNodesFromeXML(xml_list_path, CLASSES, out_data_dir):
-import xml.etree.cElementTree as ET
 #path_root = ['./VOC2007/Annotations',
 #             './VOC2012/Annotations']
 #CLASSES = ["dog",  "person"]
@@ -63,8 +68,10 @@ import xml.etree.cElementTree as ET
 
     tree.write(os.path.join(out_data_dir, 'Annotations', xml_name))
 
+##############################
+# Brief: extract a lists of classes images and xmls to dst_data_dir
 # note: JPEGImages and Annotations are contained in data_dir
-def extractVOCSomeClass(src_data_dir, dst_data_dir, list_files):
+def extractVOCSomeClass(src_data_dir, dst_data_dir, classes, list_files):
     paths_src = [src_data_dir + '/JPEGImages', src_data_dir + '/Annotations']
     paths_dst = [dst_data_dir + '/JPEGImages', dst_data_dir + '/Annotations']
     lines = open(list_files, 'r').readlines()
@@ -88,9 +95,13 @@ def extractVOCSomeClass(src_data_dir, dst_data_dir, list_files):
         xml_file_path = image_file_path.replace('JPEGImages', 'Annotations')
         xml_file_path = xml_file_path.replace('jpg', 'xml')
 
-        write_lines.append(image_file_path + ' ' + xml_file_path + '\n')
+        hasTheClass = deleteChildNodesFromeXML(xml_file_path, classes, dst_data_dir)
+        if not hasTheClass:
+            continue
+        write_lines.append(paths_dst[0]+'/'+image_name+'.jpg'+ ' ' + \
+                           paths_dst[1]+'/'+image_name+'.xml' + '\n')
         shutil.copy(image_file_path, paths_dst[0] + '/')
-        shutil.copy(xml_file_path, paths_dst[1] + '/')
+        #shutil.copy(xml_file_path, paths_dst[1] + '/')
         num_images += 1
         print 'copy', num_images, image_file_path, 'to', paths_dst[0]
         print 'copy', num_images, xml_file_path, 'to', paths_dst[1]
@@ -138,4 +149,6 @@ if __name__ == '__main__':
 
     list_files = '/workspace/D2/sanjun/VOCdevkit/VOC2012/ImageSets/Main/person_trainval.txt'
 
-    extractVOCSomeClass(src_data_dir, dst_data_dir, list_files)
+    CLASSES = ['person']
+
+    extractVOCSomeClass(src_data_dir, dst_data_dir, CLASSES, list_files)
