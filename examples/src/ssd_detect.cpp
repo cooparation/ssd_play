@@ -265,7 +265,7 @@ int main(int argc, char** argv) {
   const string& mean_file = FLAGS_mean_file;
   const string& mean_value = FLAGS_mean_value;
   const string& file_type = FLAGS_file_type;
-  const string& out_file = FLAGS_out_file;
+  const string& out_file = (argc == 4) ? FLAGS_out_file:argv[4];
   const float confidence_threshold = FLAGS_confidence_threshold;
 
   // Initialize the network.

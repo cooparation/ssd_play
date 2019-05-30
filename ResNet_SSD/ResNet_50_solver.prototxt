@@ -1,0 +1,36 @@
+net: "./models_180910/ResNet_50_train_val.prototxt"
+test_initialization: false
+#test_iter: 1000
+test_iter: 1000
+test_interval: 1000
+
+## train 0
+base_lr: 0.01
+lr_policy: "multistep"
+gamma: 0.1
+stepvalue: 30000
+# stepvalue: 42000
+# #stepvalue: 45000
+# stepvalue: 53000
+# stepvalue: 80000
+stepvalue: 80000
+stepvalue: 100000
+stepvalue: 300000
+stepvalue: 700000
+stepvalue: 1000000
+stepvalue: 1500000
+stepvalue: 2000000
+
+momentum: 0.9
+weight_decay: 0.0005
+
+display: 100
+#average_loss: 30
+#max_iter: 40000
+#max_iter: 50000
+#max_iter: 70000
+#max_iter: 2400000
+max_iter: 150000
+snapshot: 10000
+solver_mode: GPU
+snapshot_prefix: "models_180910/model3/resnet50/"

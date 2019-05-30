@@ -7,11 +7,15 @@ SET(CMAKE_C_COMPILER g++)
 add_compile_options(-std=c++11)
 
 # set caffe root dir
-set(Caffe_DIR /home/liusj/dl/ssd/caffe/.build_release)
+#set(Caffe_DIR /workspace/dl/ssd/caffe/.build_release)
+set(Caffe_DIR /workspace/dl/ssd/caffe/build)
 find_package(Caffe)
 include_directories(${Caffe_DIR}/../include)
+include_directories(${Caffe_DIR}/include)
+include_directories(/usr/local/cuda-9.0/targets/x86_64-linux/include)
 
 find_package(OpenCV REQUIRED)
+add_definitions(-DUSE_OPENCV)
 
 include_directories(include
         ${OpenCV_INCLUDE_DIRS}

@@ -1,5 +1,5 @@
 from __future__ import print_function
-import caffe
+
 
 import math
 import os
@@ -7,7 +7,9 @@ import shutil
 import stat
 import subprocess
 import sys
+sys.path.append('/workspace/dl/ssd/caffe/python')
 
+import caffe
 from caffe.model_libs import *
 from caffe import params as P
 
